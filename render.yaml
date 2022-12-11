@@ -7,6 +7,12 @@ services:
     repo: https://github.com/farukaydin/automatisch
     healthCheckPath: /
     envVars:
+      - key: ENABLE_BULLMQ_DASHBOARD
+        value: true
+      - key: BULLMQ_DASHBOARD_USERNAME
+        value: sample
+      - key: BULLMQ_DASHBOARD_PASSWORD
+        value: sample
       - key: HOST
         fromService:
           name: main
