@@ -86,12 +86,10 @@ services:
       - fromGroup: common-env-vars
   - type: redis
     name: automatisch-redis
-    plan: starter
     ipAllowList: [] # allow only internal connections
     maxmemoryPolicy: noeviction
 databases:
   - name: automatisch-database
-    plan: starter
     databaseName: automatisch
 envVarGroups:
   - name: common-env-vars
