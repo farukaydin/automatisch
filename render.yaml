@@ -4,7 +4,7 @@ services:
     env: docker
     dockerfilePath: ./docker/Dockerfile
     dockerContext: ./docker
-    repo: https://github.com/farukaydin/automatisch
+    repo: https://github.com/automatisch/automatisch
     healthCheckPath: /
     envVars:
       - key: HOST
@@ -14,33 +14,33 @@ services:
           envVarKey: RENDER_EXTERNAL_HOSTNAME
       - key: POSTGRES_HOST
         fromDatabase:
-          name: elephant
+          name: automatisch-database
           property: host
       - key: POSTGRES_PORT
         fromDatabase:
-          name: elephant
-          property: port # available properties are listed below
+          name: automatisch-database
+          property: port
       - key: POSTGRES_DATABASE
         fromDatabase:
-          name: elephant
-          property: database # available properties are listed below
+          name: automatisch-database
+          property: database
       - key: POSTGRES_USERNAME
         fromDatabase:
-          name: elephant
-          property: user # available properties are listed below
+          name: automatisch-database
+          property: user
       - key: POSTGRES_PASSWORD
         fromDatabase:
-          name: elephant
-          property: password # available properties are listed below
+          name: automatisch-database
+          property: password
       - key: REDIS_HOST
         fromService:
           type: redis
-          name: lightning
-          property: host # available properties are listed below
+          name: automatisch-redis
+          property: host
       - key: REDIS_PORT
         fromService:
           type: redis
-          name: lightning
+          name: automatisch-redis
           property: port
       - fromGroup: common-env-vars
   - type: web
@@ -60,44 +60,44 @@ services:
           property: host
       - key: POSTGRES_HOST
         fromDatabase:
-          name: elephant
+          name: automatisch-database
           property: host
       - key: POSTGRES_PORT
         fromDatabase:
-          name: elephant
-          property: port # available properties are listed below
+          name: automatisch-database
+          property: port
       - key: POSTGRES_DATABASE
         fromDatabase:
-          name: elephant
-          property: database # available properties are listed below
+          name: automatisch-database
+          property: database
       - key: POSTGRES_USERNAME
         fromDatabase:
-          name: elephant
-          property: user # available properties are listed below
+          name: automatisch-database
+          property: user
       - key: POSTGRES_PASSWORD
         fromDatabase:
-          name: elephant
-          property: password # available properties are listed below
+          name: automatisch-database
+          property: password
       - key: REDIS_HOST
         fromService:
           type: redis
-          name: lightning
-          property: host # available properties are listed below
+          name: automatisch-redis
+          property: host
       - key: REDIS_PORT
         fromService:
           type: redis
-          name: lightning
+          name: automatisch-redis
           property: port
       - fromGroup: common-env-vars
   - type: redis
-    name: lightning
-    plan: free
+    name: automatisch-redis
+    plan: starter
     ipAllowList: [] # only allow internal connections
     maxmemoryPolicy: noeviction
 databases:
-  - name: elephant
-    plan: free
-    databaseName: automatisch-database
+  - name: automatisch-database
+    plan: starter
+    databaseName: automatisch-postgres
 envVarGroups:
   - name: common-env-vars
     envVars:
