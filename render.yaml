@@ -13,22 +13,18 @@ services:
           property: host
       - key: POSTGRES_PORT
         fromService:
-          type: redis
           name: lightning
           property: port # available properties are listed below
       - key: POSTGRES_DATABASE
         fromService:
-          type: redis
           name: lightning
           property: database # available properties are listed below
       - key: POSTGRES_USERNAME
         fromService:
-          type: redis
           name: lightning
           property: user # available properties are listed below
       - key: POSTGRES_PASSWORD
         fromService:
-          type: redis
           name: lightning
           property: password # available properties are listed below
       - key: REDIS_HOST
