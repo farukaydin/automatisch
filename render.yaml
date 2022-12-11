@@ -78,4 +78,3 @@ envVarGroups:
           type: redis
           name: automatisch-redis
           property: port
-      - fromGroup: common-env-vars
