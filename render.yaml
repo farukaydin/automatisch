@@ -43,7 +43,7 @@ services:
           name: automatisch-redis
           property: port
       - fromGroup: common-env-vars
-  - type: web
+  - type: worker
     name: automatisch-worker
     env: docker
     dockerfilePath: ./docker/Dockerfile
