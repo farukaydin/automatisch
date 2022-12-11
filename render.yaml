@@ -7,22 +7,6 @@ services:
     repo: https://github.com/farukaydin/automatisch
     healthCheckPath: /
     envVars:
-      - key: ENABLE_BULLMQ_DASHBOARD
-        value: true
-      - key: BULLMQ_DASHBOARD_USERNAME
-        value: sample
-      - key: BULLMQ_DASHBOARD_PASSWORD
-        value: sample
-      - key: HOST
-        fromService:
-          name: main
-          type: web
-          property: host
-      - key: PORT
-        fromService:
-          name: main
-          type: web
-          property: port
       - key: POSTGRES_HOST
         fromDatabase:
           name: elephant
@@ -73,6 +57,11 @@ envVarGroups:
         value: production
       - key: PROTOCOL
         value: https
+      - key: HOST
+        fromService:
+          name: main
+          type: web
+          property: host
       - key: PORT
         value: 443
       - key: ENCRYPTION_KEY
