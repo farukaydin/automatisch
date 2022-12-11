@@ -50,7 +50,6 @@ databases:
   - name: elephant
     plan: free
     databaseName: mydb # optional (Render may add a suffix)
-    postgresMajorVersion: 14
 envVarGroups:
   - name: common-env-vars
     envVars:
