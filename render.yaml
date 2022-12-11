@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: main
+    name: automatisch-main
     env: docker
     dockerfilePath: ./docker/Dockerfile
     dockerContext: ./docker
@@ -43,18 +43,61 @@ services:
           name: lightning
           property: port
       - fromGroup: common-env-vars
+  - type: web
+    name: automatisch-worker
+    env: docker
+    dockerfilePath: ./docker/Dockerfile
+    dockerContext: ./docker
+    repo: https://github.com/farukaydin/automatisch
+    healthCheckPath: /
+    envVars:
+      - key: WORKER
+        value: true
+      - key: HOST
+        fromService:
+          name: main
+          type: web
+          property: host
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: elephant
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: elephant
+          property: port # available properties are listed below
+      - key: POSTGRES_DATABASE
+        fromDatabase:
+          name: elephant
+          property: database # available properties are listed below
+      - key: POSTGRES_USERNAME
+        fromDatabase:
+          name: elephant
+          property: user # available properties are listed below
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: elephant
+          property: password # available properties are listed below
+      - key: REDIS_HOST
+        fromService:
+          type: redis
+          name: lightning
+          property: host # available properties are listed below
+      - key: REDIS_PORT
+        fromService:
+          type: redis
+          name: lightning
+          property: port
+      - fromGroup: common-env-vars
   - type: redis
     name: lightning
     plan: free
-    ipAllowList: # required
-      - source: 0.0.0.0/0
-        description: everywhere
+    ipAllowList: [] # only allow internal connections
     maxmemoryPolicy: noeviction
-
 databases:
   - name: elephant
     plan: free
-    databaseName: mydb # optional (Render may add a suffix)
+    databaseName: automatisch-database
 envVarGroups:
   - name: common-env-vars
     envVars:
