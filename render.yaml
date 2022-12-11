@@ -1,9 +1,8 @@
 services:
-  # A Docker web service
   - type: web
     name: main
     env: docker
-    repo: https://github.com/automatisch/automatisch # optional
+    repo: https://github.com/automatisch/automatisch
     healthCheckPath: /
     envVars:
       - key: REDIS_HOST
@@ -22,3 +21,16 @@ databases:
   - name: elephant
     plan: free
     databaseName: mydb # optional (Render may add a suffix)
+envVarGroups:
+  - name: conc-settings
+    envVars:
+      - key: CONCURRENCY
+        value: 2
+      - key: SECRET
+        generateValue: true
+      - key: USER_PROVIDED_SECRET
+        sync: false
+  - name: stripe
+    envVars:
+      - key: STRIPE_API_URL
+        value: https://api.stripe.com/v2
