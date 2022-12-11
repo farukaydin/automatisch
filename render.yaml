@@ -13,19 +13,19 @@ services:
           property: host
       - key: POSTGRES_PORT
         fromDatabase:
-          name: lightning
+          name: elephant
           property: port # available properties are listed below
       - key: POSTGRES_DATABASE
         fromDatabase:
-          name: lightning
+          name: elephant
           property: database # available properties are listed below
       - key: POSTGRES_USERNAME
         fromDatabase:
-          name: lightning
+          name: elephant
           property: user # available properties are listed below
       - key: POSTGRES_PASSWORD
         fromDatabase:
-          name: lightning
+          name: elephant
           property: password # available properties are listed below
       - key: REDIS_HOST
         fromService:
@@ -47,7 +47,7 @@ services:
     maxmemoryPolicy: noeviction
 
 databases:
-  - name: lightning
+  - name: elephant
     plan: free
     databaseName: mydb # optional (Render may add a suffix)
 envVarGroups:
