@@ -16,6 +16,13 @@ services:
           name: lightning
           property: port
       - fromGroup: conc-settings
+  - type: redis
+    name: lightning
+    plan: free
+    ipAllowList: # required
+      - source: 0.0.0.0/0
+        description: everywhere
+    maxmemoryPolicy: noeviction
 
 databases:
   - name: elephant
