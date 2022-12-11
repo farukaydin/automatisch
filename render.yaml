@@ -7,41 +7,6 @@ services:
     repo: https://github.com/automatisch/automatisch
     healthCheckPath: /
     envVars:
-      - key: HOST
-        fromService:
-          name: main
-          type: web
-          envVarKey: RENDER_EXTERNAL_HOSTNAME
-      - key: POSTGRES_HOST
-        fromDatabase:
-          name: automatisch-database
-          property: host
-      - key: POSTGRES_PORT
-        fromDatabase:
-          name: automatisch-database
-          property: port
-      - key: POSTGRES_DATABASE
-        fromDatabase:
-          name: automatisch-database
-          property: database
-      - key: POSTGRES_USERNAME
-        fromDatabase:
-          name: automatisch-database
-          property: user
-      - key: POSTGRES_PASSWORD
-        fromDatabase:
-          name: automatisch-database
-          property: password
-      - key: REDIS_HOST
-        fromService:
-          type: redis
-          name: automatisch-redis
-          property: host
-      - key: REDIS_PORT
-        fromService:
-          type: redis
-          name: automatisch-redis
-          property: port
       - fromGroup: common-env-vars
   - type: web
     name: automatisch-worker
@@ -53,11 +18,36 @@ services:
     envVars:
       - key: WORKER
         value: true
+      - fromGroup: common-env-vars
+  - type: redis
+    name: automatisch-redis
+    plan: starter
+    ipAllowList: [] # allow only internal connections
+    maxmemoryPolicy: noeviction
+databases:
+  - name: automatisch-database
+    plan: starter
+    databaseName: automatisch
+envVarGroups:
+  - name: common-env-vars
+    envVars:
+      - key: APP_ENV
+        value: production
       - key: HOST
         fromService:
           name: main
           type: web
-          property: host
+          envVarKey: RENDER_EXTERNAL_HOSTNAME
+      - key: PROTOCOL
+        value: https
+      - key: PORT
+        value: 443
+      - key: ENCRYPTION_KEY
+        generateValue: true
+      - key: WEBHOOK_SECRET_KEY
+        generateValue: true
+      - key: APP_SECRET_KEY
+        generateValue: true
       - key: POSTGRES_HOST
         fromDatabase:
           name: automatisch-database
@@ -89,27 +79,3 @@ services:
           name: automatisch-redis
           property: port
       - fromGroup: common-env-vars
-  - type: redis
-    name: automatisch-redis
-    plan: starter
-    ipAllowList: [] # only allow internal connections
-    maxmemoryPolicy: noeviction
-databases:
-  - name: automatisch-database
-    plan: starter
-    databaseName: automatisch
-envVarGroups:
-  - name: common-env-vars
-    envVars:
-      - key: APP_ENV
-        value: production
-      - key: PROTOCOL
-        value: https
-      - key: PORT
-        value: 443
-      - key: ENCRYPTION_KEY
-        generateValue: true
-      - key: WEBHOOK_SECRET_KEY
-        generateValue: true
-      - key: APP_SECRET_KEY
-        generateValue: true
