@@ -7,6 +7,11 @@ services:
     repo: https://github.com/farukaydin/automatisch
     healthCheckPath: /
     envVars:
+      - key: HOST
+        fromService:
+          name: main
+          type: web
+          property: host
       - key: POSTGRES_HOST
         fromDatabase:
           name: elephant
@@ -57,11 +62,6 @@ envVarGroups:
         value: production
       - key: PROTOCOL
         value: https
-      - key: HOST
-        fromService:
-          name: main
-          type: web
-          property: host
       - key: PORT
         value: 443
       - key: ENCRYPTION_KEY
