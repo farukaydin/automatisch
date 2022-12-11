@@ -47,7 +47,7 @@ services:
     maxmemoryPolicy: noeviction
 
 databases:
-  - name: elephant
+  - name: lightning
     plan: free
     databaseName: mydb # optional (Render may add a suffix)
 envVarGroups:
