@@ -11,7 +11,7 @@ services:
         fromService:
           name: main
           type: web
-          property: host
+          envVarKey: RENDER_EXTERNAL_HOSTNAME
       - key: POSTGRES_HOST
         fromDatabase:
           name: elephant
