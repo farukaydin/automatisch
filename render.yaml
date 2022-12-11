@@ -7,6 +7,30 @@ services:
     repo: https://github.com/farukaydin/automatisch
     healthCheckPath: /
     envVars:
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: elephant
+          property: host
+      - key: POSTGRES_PORT
+        fromService:
+          type: redis
+          name: lightning
+          property: port # available properties are listed below
+      - key: POSTGRES_DATABASE
+        fromService:
+          type: redis
+          name: lightning
+          property: database # available properties are listed below
+      - key: POSTGRES_USERNAME
+        fromService:
+          type: redis
+          name: lightning
+          property: user # available properties are listed below
+      - key: POSTGRES_PASSWORD
+        fromService:
+          type: redis
+          name: lightning
+          property: password # available properties are listed below
       - key: REDIS_HOST
         fromService:
           type: redis
@@ -17,7 +41,7 @@ services:
           type: redis
           name: lightning
           property: port
-      - fromGroup: conc-settings
+      - fromGroup: common-env-vars
   - type: redis
     name: lightning
     plan: free
@@ -30,16 +54,19 @@ databases:
   - name: elephant
     plan: free
     databaseName: mydb # optional (Render may add a suffix)
+    postgresMajorVersion: 14
 envVarGroups:
-  - name: conc-settings
+  - name: common-env-vars
     envVars:
-      - key: CONCURRENCY
-        value: 2
-      - key: SECRET
+      - key: APP_ENV
+        value: production
+      - key: PROTOCOL
+        value: https
+      - key: PORT
+        value: 443
+      - key: ENCRYPTION_KEY
         generateValue: true
-      - key: USER_PROVIDED_SECRET
-        sync: false
-  - name: stripe
-    envVars:
-      - key: STRIPE_API_URL
-        value: https://api.stripe.com/v2
+      - key: WEBHOOK_SECRET_KEY
+        generateValue: true
+      - key: APP_SECRET_KEY
+        generateValue: true
