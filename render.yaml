@@ -7,6 +7,11 @@ services:
     repo: https://github.com/automatisch/automatisch
     healthCheckPath: /
     envVars:
+      - key: HOST
+        fromService:
+          name: main
+          type: web
+          envVarKey: RENDER_EXTERNAL_HOSTNAME
       - key: POSTGRES_HOST
         fromDatabase:
           name: automatisch-database
@@ -93,11 +98,6 @@ envVarGroups:
     envVars:
       - key: APP_ENV
         value: production
-      - key: HOST
-        fromService:
-          name: main
-          type: web
-          envVarKey: RENDER_EXTERNAL_HOSTNAME
       - key: PROTOCOL
         value: https
       - key: PORT
