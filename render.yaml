@@ -97,7 +97,7 @@ services:
 databases:
   - name: automatisch-database
     plan: starter
-    databaseName: automatisch-postgres
+    databaseName: automatisch
 envVarGroups:
   - name: common-env-vars
     envVars:
