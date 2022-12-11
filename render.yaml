@@ -48,7 +48,7 @@ services:
     env: docker
     dockerfilePath: ./docker/Dockerfile
     dockerContext: ./docker
-    repo: https://github.com/farukaydin/automatisch
+    repo: https://github.com/automatisch/automatisch
     autoDeploy: false
     envVars:
       - key: WORKER
